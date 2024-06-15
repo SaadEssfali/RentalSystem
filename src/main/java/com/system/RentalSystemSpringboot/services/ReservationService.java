@@ -1,2 +1,44 @@
-package com.system.RentalSystemSpringboot.services;public class ReservationService {
+package com.system.RentalSystemSpringboot.services;
+
+import com.system.RentalSystemSpringboot.models.Client;
+import com.system.RentalSystemSpringboot.models.Reservation;
+import com.system.RentalSystemSpringboot.repository.ReservationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+import java.util.Optional;
+
+public class ReservationService {
+
+    @Autowired
+    ReservationRepository reservationRepository;
+
+    public List<Reservation> findByClient(Client client){
+        Optional<List<Reservation>> reservations=reservationRepository.findByClient(client.getIdclient());
+        if (reservations.isPresent()){
+            return reservations.get();
+        }
+        else {
+            throw new RuntimeException("Aucune reservation trouver pour ce client");
+        }
+    }
+
+    public List<Reservation> findall(){
+
+        return  reservationRepository.findAll();
+    }
+
+    public Reservation findbyid(Long id){
+        Optional<Reservation> reservation= reservationRepository.findById(id);
+        if (reservation.isPresent()){
+            return reservation.get();
+        }
+        else throw new RuntimeException("Aucune reservation trouvé");
+    }
+
+    public Reservation save(Reservation reservation){
+        return reservationRepository.save(reservation);
+    }
+
+
 }
