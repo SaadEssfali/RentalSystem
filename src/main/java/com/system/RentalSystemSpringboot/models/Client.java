@@ -30,6 +30,7 @@ public class Client {
     @Column(nullable = false, unique = true)
     private String numeropermis;
 
+
     private String numerotelephone;
     private String adresse;
     private String ville;

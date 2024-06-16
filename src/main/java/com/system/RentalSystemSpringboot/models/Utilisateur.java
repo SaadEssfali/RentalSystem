@@ -29,14 +29,12 @@ public class Utilisateur implements UserDetails, Principal {
 
     private String nom;
     private String prenom;
-    @Lob
-    private byte[] permis;
+
 
     @Column(nullable = false,unique = true)
     private String email;
     private String password;
-    @Column(nullable = false,unique = true)
-    private String cin;
+
 
     private String numerpTelephone;
 
