@@ -6,6 +6,7 @@ import com.system.RentalSystemSpringboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -61,5 +62,12 @@ public class ClientService {
         } else {
             throw new RuntimeException("Client not found with id: " + id);
         }
+    }
+
+    public List<Client> findAll(){
+        return  clientRepository.findAll();
+    }
+    public Client findById(Long id){
+        return clientRepository.findById(id).get();
     }
 }
