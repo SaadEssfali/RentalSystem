@@ -1,6 +1,5 @@
 package com.system.RentalSystemSpringboot.models;
 
-import ch.qos.logback.core.net.server.Client;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;

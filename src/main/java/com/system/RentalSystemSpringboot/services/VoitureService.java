@@ -26,13 +26,20 @@ public class VoitureService {
     public List<Voiture> findAll() {
         return voitureRepository.findAll();
     }
-    public Optional<Voiture> findById(long id) {
-        return voitureRepository.findById(id);
+    public Voiture findById(long id) {
+        Optional<Voiture> voiture= voitureRepository.findById(id);
+        if (voiture.isPresent()) {
+            return voiture.get();
+        }
+        else {
+            throw new RuntimeException("Voiture non trouvable");
+        }
     }
-    public void delete(Voiture voiture) {
-        Optional<Utilisateur> voiturecheck=userRepository.findById(voiture.getIdvoiture());
+    public void delete(Long id) {
+        Optional<Voiture> voiturecheck=voitureRepository.findById(id);
         if (voiturecheck.isPresent()) {
-            voitureRepository.delete(voiture);
+            Voiture deletevoiture=voiturecheck.get();
+            voitureRepository.delete(deletevoiture);
         }
         else throw new RuntimeException("voiture introuvable");
 

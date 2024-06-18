@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 @Service
 public class UtilisateurService {
+
     @Autowired
     private UserRepository userRepository;
 
@@ -30,7 +31,6 @@ public class UtilisateurService {
           Utilisateurupdated.setAccountlocked(user.isAccountlocked());
           Utilisateurupdated.setPrenom(user.getPrenom());
           Utilisateurupdated.setPassword(user.getPassword());
-          Utilisateurupdated.setCreatdDate(user.getCreatdDate());
           Utilisateurupdated.setLastModifiedDate(user.getLastModifiedDate());
 
           return userRepository.save(Utilisateurupdated);

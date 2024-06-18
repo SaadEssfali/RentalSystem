@@ -15,7 +15,7 @@ public class ReservationService {
     ReservationRepository reservationRepository;
 
     public List<Reservation> findByClient(Client client){
-        Optional<List<Reservation>> reservations=reservationRepository.findByClient(client.getIdclient());
+        Optional<List<Reservation>> reservations= Optional.ofNullable(reservationRepository.findByClient(client));
         if (reservations.isPresent()){
             return reservations.get();
         }

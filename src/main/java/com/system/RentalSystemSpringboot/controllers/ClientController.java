@@ -2,16 +2,19 @@ package com.system.RentalSystemSpringboot.controllers;
 
 import com.system.RentalSystemSpringboot.models.Client;
 import com.system.RentalSystemSpringboot.services.ClientService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/clients")
+@RequestMapping("/api/v1/client")
+@Validated
 public class ClientController {
 
     @Autowired
@@ -25,37 +28,41 @@ public class ClientController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Client> getClientById(@PathVariable long id) {
-       Client client = clientService.findById(id);
-        if (client !=null) {
-            return new ResponseEntity<>(client, HttpStatus.OK);
+        Client client = clientService.findById(id);
+        if (client != null) {
+            return ResponseEntity.ok(client);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping
-    public ResponseEntity<Client> addClient(@RequestBody Client client) {
+    public ResponseEntity<Client> addClient(@Valid @RequestBody Client client) {
         Client savedClient = clientService.save(client);
         return new ResponseEntity<>(savedClient, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Client> updateClient(@RequestBody Client client, @PathVariable long id) {
+    public ResponseEntity<Client> updateClient(@PathVariable long id, @Valid @RequestBody Client client) {
         try {
             Client updatedClient = clientService.update(id, client);
-            return new ResponseEntity<>(updatedClient, HttpStatus.OK);
+            if (updatedClient != null) {
+                return ResponseEntity.ok(updatedClient);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
         } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteClient(@PathVariable long id) {
+    public ResponseEntity<Client> deleteClient(@PathVariable long id) {
         try {
-            clientService.delete(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            clientService.updateClientEtat(id);
+            return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 }

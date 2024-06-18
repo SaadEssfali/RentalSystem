@@ -92,7 +92,7 @@ public class Utilisateur implements UserDetails, Principal {
     public boolean isEnabled() {
         return enabled;
     }
-    private String fullName(){
+    public String fullName(){
         return prenom+""+nom;
     }
 }

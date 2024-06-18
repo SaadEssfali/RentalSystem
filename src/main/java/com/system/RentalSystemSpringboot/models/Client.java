@@ -20,6 +20,7 @@ public class Client {
     private String prenom;
     private String nom;
 
+
     @Lob
     private byte[] permis;
 

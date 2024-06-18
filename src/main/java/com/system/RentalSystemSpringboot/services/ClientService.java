@@ -70,4 +70,11 @@ public class ClientService {
     public Client findById(Long id){
         return clientRepository.findById(id).get();
     }
+    public Client updateClientEtat(Long id) {
+        int updatedRows = clientRepository.updateClientEtatById(id);
+        if (updatedRows > 0) {
+            return clientRepository.findById(id).orElse(null);
+        }
+        return null;
+    }
 }

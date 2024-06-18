@@ -1,5 +1,6 @@
 package com.system.RentalSystemSpringboot.repository;
 
+import com.system.RentalSystemSpringboot.models.Client;
 import com.system.RentalSystemSpringboot.models.Reservation;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,6 +11,8 @@ import java.util.Optional;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation,Long> {
-    Optional<List <Reservation>> findByClient(long id);
+    List<Reservation> findByClient(Client client);
+
+
 }
 
