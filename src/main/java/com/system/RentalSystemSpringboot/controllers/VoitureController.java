@@ -33,6 +33,15 @@ public class VoitureController {
             return ResponseEntity.ok(voiture);
         }
     }
+    @PostMapping
+    public ResponseEntity<Voiture>saveVoiture(@Valid @RequestBody Voiture voiture) {
+        Voiture voitureSaved = voitureService.save(voiture);
+        if (voitureSaved == null) {
+            logger.info("Erreur de saving la Voiture");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(voitureSaved);
+    }
 
     @PutMapping("/{idvoiture}")
     public ResponseEntity<Voiture> updateVoiture(@PathVariable Long idvoiture, @Valid @RequestBody Voiture voiture) {

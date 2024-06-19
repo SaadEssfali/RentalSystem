@@ -26,9 +26,7 @@ public class UtilisateurService {
           Utilisateurupdated.setNumerpTelephone(user.getNumerpTelephone());
           Utilisateurupdated.setEnabled(user.isEnabled());
           Utilisateurupdated.setCodepostal(user.getCodepostal());
-          Utilisateurupdated.setRole(user.getRole());
           Utilisateurupdated.setVille(user.getVille());
-          Utilisateurupdated.setAccountlocked(user.isAccountlocked());
           Utilisateurupdated.setPrenom(user.getPrenom());
           Utilisateurupdated.setPassword(user.getPassword());
           Utilisateurupdated.setLastModifiedDate(user.getLastModifiedDate());
