@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 
 @RestController
-@RequestMapping("/api/v1/voiture")
+@RequestMapping("/voiture")
 @Validated
 public class VoitureController {
 
