@@ -28,6 +28,9 @@ public class Reservation {
     @JoinColumn(name = "clientid",nullable = false)
     private Client client;
 
+    @ManyToOne
+    @JoinColumn(name = "utilisateurid",nullable = false)
+    private Utilisateur utilisateur;
 
     private LocalDate datedebut;
     private LocalDate datefin;

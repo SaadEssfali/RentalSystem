@@ -10,7 +10,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/client")
@@ -57,7 +56,7 @@ public class ClientController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Client> deleteClient(@PathVariable long id) {
+    public ResponseEntity<Void> deleteClient(@PathVariable long id) {
         try {
             clientService.updateClientEtat(id);
             return ResponseEntity.noContent().build();
