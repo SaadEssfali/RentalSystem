@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
 @EnableJpaAuditing
-@KeycloakConfiguration
 
 public class RentalSystemSpringbootApplication {
 	public static void main(String[] args) {

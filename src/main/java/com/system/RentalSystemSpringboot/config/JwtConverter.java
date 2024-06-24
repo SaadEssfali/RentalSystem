@@ -1,5 +1,7 @@
 package com.system.RentalSystemSpringboot.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,6 +21,7 @@ import java.util.stream.Stream;
 @Component
 public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken> {
 
+    private static final Logger logger = LoggerFactory.getLogger(JwtConverter.class);
     private final JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
     private final JwtConverterProperties properties;
 
@@ -30,7 +33,10 @@ public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken>
     public AbstractAuthenticationToken convert(Jwt jwt) {
         Collection<GrantedAuthority> authorities = Stream.concat(
                 jwtGrantedAuthoritiesConverter.convert(jwt).stream(),
-                extractResourceRoles(jwt).stream()).collect(Collectors.toSet());
+                extractRoles(jwt).stream()).collect(Collectors.toSet());
+
+        authorities.forEach(authority -> logger.debug("Granted Authority: {}", authority.getAuthority()));
+
         return new JwtAuthenticationToken(jwt, authorities, getPrincipalClaimName(jwt));
     }
 
@@ -42,24 +48,33 @@ public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken>
         return jwt.getClaimAsString(claimName);
     }
 
-    private Collection<? extends GrantedAuthority> extractResourceRoles(Jwt jwt) {
+    private Collection<? extends GrantedAuthority> extractRoles(Jwt jwt) {
         Map<String, Object> resourceAccess = jwt.getClaim("resource_access");
-        if (resourceAccess == null) {
-            return Set.of();
+        if (resourceAccess != null) {
+            Map<String, Object> resource = (Map<String, Object>) resourceAccess.get(properties.getResourceId());
+            if (resource != null) {
+                Collection<String> resourceRoles = (Collection<String>) resource.get("roles");
+                if (resourceRoles != null) {
+                    resourceRoles.forEach(role -> logger.debug("Extracted role from resource_access: {}", role));
+                    return resourceRoles.stream()
+                            .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                            .collect(Collectors.toSet());
+                }
+            }
         }
 
-        Map<String, Object> resource = (Map<String, Object>) resourceAccess.get(properties.getResourceId());
-        if (resource == null) {
-            return Set.of();
+        Map<String, Object> realmAccess = jwt.getClaim("realm_access");
+        if (realmAccess != null) {
+            Collection<String> realmRoles = (Collection<String>) realmAccess.get("roles");
+            if (realmRoles != null) {
+                realmRoles.forEach(role -> logger.debug("Extracted role from realm_access: {}", role));
+                return realmRoles.stream()
+                        .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                        .collect(Collectors.toSet());
+            }
         }
 
-        Collection<String> resourceRoles = (Collection<String>) resource.get("roles");
-        if (resourceRoles == null) {
-            return Set.of();
-        }
-
-        return resourceRoles.stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
-                .collect(Collectors.toSet());
+        logger.warn("No roles found in JWT");
+        return Set.of();
     }
 }
