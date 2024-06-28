@@ -6,6 +6,7 @@ import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -22,15 +23,15 @@ public class Voiture {
 
     @Column(nullable = false,unique = true)
     private String numeroimmatriculation;
-    @Lob
-    private byte[] image;
-    private String nomAssurance;
-    private LocalDate dateFinAssurance;
-    private Double prixParJour;
+
+    private Double prixparjour;
     private String statut;
     private String marque;
     private String modele;
-    private Integer kilometrage;
-    private Integer anneefabrication;
+    private int kilometrage;
     private String typecarburant;
+    private Date miseenroute;
+
+
+
 }

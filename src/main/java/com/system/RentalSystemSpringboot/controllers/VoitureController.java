@@ -11,10 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/voiture")
 @Validated
+@CrossOrigin(origins = "http://localhost:4200")
+
 public class VoitureController {
 
     private static final Logger logger = LoggerFactory.getLogger(VoitureController.class);
@@ -54,6 +58,15 @@ public class VoitureController {
             voiture.setIdvoiture(idvoiture);
             return ResponseEntity.ok(voitureService.updateVoiture(voiture));
         }
+    }
+    @GetMapping("/voitures")
+    public ResponseEntity<List<Voiture>> getAllVoitures() {
+
+        List<Voiture> voitures = voitureService.findAll();
+        if (voitures.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(voitures);
     }
 
     @DeleteMapping("/{idvoiture}")

@@ -50,13 +50,10 @@ public class VoitureService {
             Voiture updatedvoiture=voitureOptional.get();
             updatedvoiture.setMarque(voiture.getMarque());
             updatedvoiture.setModele(voiture.getModele());
-            updatedvoiture.setImage(voiture.getImage());
-            updatedvoiture.setAnneefabrication(voiture.getAnneefabrication());
+
             updatedvoiture.setKilometrage(voiture.getKilometrage());
-            updatedvoiture.setDateFinAssurance(voiture.getDateFinAssurance());
-            updatedvoiture.setNomAssurance(voiture.getNomAssurance());
             updatedvoiture.setNumeroimmatriculation(voiture.getNumeroimmatriculation());
-            updatedvoiture.setPrixParJour(voiture.getPrixParJour());
+            updatedvoiture.setPrixparjour(voiture.getPrixparjour());
             updatedvoiture.setStatut(voiture.getStatut());
             updatedvoiture.setTypecarburant(voiture.getTypecarburant());
 

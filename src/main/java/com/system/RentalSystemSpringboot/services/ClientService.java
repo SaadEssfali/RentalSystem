@@ -42,7 +42,6 @@ public class ClientService {
             client1.setAdresse(upclient.getAdresse());
             client1.setNumerotelephone(upclient.getNumerotelephone());
             client1.setVille(upclient.getVille());
-            client1.setPermis(upclient.getPermis());
             client1.setCodePostal(upclient.getCodePostal());
             client1.setNumeropermis(upclient.getNumeropermis());
             return clientRepository.save(client1);

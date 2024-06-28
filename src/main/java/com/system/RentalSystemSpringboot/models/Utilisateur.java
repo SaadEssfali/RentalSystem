@@ -20,6 +20,8 @@ import java.util.Collection;
 @Entity
 @Table(name = "Utilisateur")
 @EntityListeners(AuditingEntityListener.class)
+@Inheritance(strategy = InheritanceType.JOINED)
+
 public class Utilisateur implements UserDetails {
 
     @Id
@@ -31,13 +33,11 @@ public class Utilisateur implements UserDetails {
 
     @Column(nullable = false, unique = true)
     private String email;
+    @Column(nullable = false)
     private String password;
 
-    private String numerpTelephone;
-    private String adresse;
-    private String ville;
-    private String etat;
-    private String codepostal;
+    private String numeroTelephone;
+
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -45,7 +45,7 @@ public class Utilisateur implements UserDetails {
 
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;
-
+    private String etat;
     private boolean enabled;
     private boolean accountLocked;
 

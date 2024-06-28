@@ -13,14 +13,5 @@ public class UtilisateurController {
     @Autowired
     private UtilisateurService utilisateurService;
 
-    @PostMapping
-    public ResponseEntity<Utilisateur>saveUtilisateur(Utilisateur utilisateur) {
-        utilisateurService.save(utilisateur);
-        if (utilisateur!=null){
-            return ResponseEntity.ok(utilisateur);
-        }
-        else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+
 }
