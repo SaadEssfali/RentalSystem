@@ -31,6 +31,18 @@ public class Voiture {
     private int kilometrage;
     private String typecarburant;
     private Date miseenroute;
+    private int nombredeporte;
+    private String carrosserie;
+    private int nbresiege;
+    private String transmissiontype;
+    private String consommationdecarburant;
+    private String couleurexterieure;
+    private int volumedecofrre;
+    private String couleurinterieur;
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
 
 
 

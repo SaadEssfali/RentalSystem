@@ -23,8 +23,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/voiture/voitures").permitAll()  // Allow access to /voiture/voitures without authentication
-                        .anyRequest().authenticated()                      // Require authentication for all other endpoints
+                        .requestMatchers("/voiture/voitures").permitAll()
+                        .requestMatchers("/voiture/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter)))
