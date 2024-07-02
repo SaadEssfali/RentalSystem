@@ -1,6 +1,5 @@
 package com.system.RentalSystemSpringboot.models;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -21,7 +20,6 @@ import java.util.Collection;
 @Table(name = "Utilisateur")
 @EntityListeners(AuditingEntityListener.class)
 @Inheritance(strategy = InheritanceType.JOINED)
-
 public class Utilisateur implements UserDetails {
 
     @Id
@@ -33,11 +31,11 @@ public class Utilisateur implements UserDetails {
 
     @Column(nullable = false, unique = true)
     private String email;
-    @Column(nullable = false)
-    private String password;
+
+    @Column(nullable = false, unique = true)
+    private String keycloakId;
 
     private String numeroTelephone;
-
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -45,6 +43,7 @@ public class Utilisateur implements UserDetails {
 
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;
+
     private String etat;
     private boolean enabled;
     private boolean accountLocked;
@@ -57,9 +56,14 @@ public class Utilisateur implements UserDetails {
     // Méthodes de UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
         return null;
     }
+
+    @Override
+    public String getPassword() {
+        return "";
+    }
+
 
     @Override
     public boolean isAccountNonExpired() {
