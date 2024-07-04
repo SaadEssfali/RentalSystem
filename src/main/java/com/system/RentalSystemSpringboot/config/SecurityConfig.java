@@ -25,6 +25,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/voiture/voitures").permitAll()
                         .requestMatchers("/voiture/**").permitAll()
+                        .requestMatchers("/user/register").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

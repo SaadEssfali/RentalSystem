@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -20,72 +21,34 @@ import java.util.Collection;
 @Table(name = "Utilisateur")
 @EntityListeners(AuditingEntityListener.class)
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Utilisateur implements UserDetails {
+public class Utilisateur{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
+    private Long id;
     private String nom;
     private String prenom;
-
-    @Column(nullable = false, unique = true)
     private String email;
-
-    @Column(nullable = false, unique = true)
-    private String keycloakId;
-
     private String numeroTelephone;
+    private String keycloakId;
+    private Boolean enabled;
+    private Boolean accountLocked;
 
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
 
-    @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
-
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModifiedDate;
     private String etat;
-    private boolean enabled;
-    private boolean accountLocked;
 
-    @Override
-    public String getUsername() {
-        return email;
+    @PrePersist
+    protected void onCreate() {
+        createdDate = new Date();
     }
 
-    // Méthodes de UserDetails
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    @PreUpdate
+    protected void onUpdate() {
+        lastModifiedDate = new Date();
     }
 
-    @Override
-    public String getPassword() {
-        return "";
-    }
-
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return !accountLocked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public String fullName() {
-        return prenom + " " + nom;
-    }
 }
