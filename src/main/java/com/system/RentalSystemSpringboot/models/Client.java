@@ -20,9 +20,7 @@ public class Client extends Utilisateur{
 
 
 
-    @Column(nullable = false, unique = true)
     private String cin;
-    @Column(nullable = false, unique = true)
     private String numeropermis;
 
 

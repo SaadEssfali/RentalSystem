@@ -3,7 +3,6 @@ package com.system.RentalSystemSpringboot.models;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import java.time.LocalDate;
 
 @Getter
@@ -27,7 +26,6 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "clientid",nullable = false)
     private Client client;
-
 
     private LocalDate datedebut;
     private LocalDate datefin;

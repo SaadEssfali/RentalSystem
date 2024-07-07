@@ -1,6 +1,8 @@
 package com.system.RentalSystemSpringboot.controllers;
 
 import com.system.RentalSystemSpringboot.models.Client;
+import com.system.RentalSystemSpringboot.models.Utilisateur;
+import com.system.RentalSystemSpringboot.repository.UserRepository;
 import com.system.RentalSystemSpringboot.services.ClientService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/client")
@@ -19,6 +22,8 @@ public class ClientController {
 
     @Autowired
     private ClientService clientService;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_admin')")
@@ -36,6 +41,17 @@ public class ClientController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/keycloackid/{keycloackid}")
+    public ResponseEntity<Client> getClientByKeycloackId(@PathVariable String keycloackid) {
+        Optional<Client> client=userRepository.findByKeycloakId(keycloackid);
+        if (client.isPresent()) {
+            return ResponseEntity.ok(client.get());
+        }
+        else {
+            return ResponseEntity.notFound().build();
+        }
+        }
 
     @PostMapping
     public ResponseEntity<Client> addClient(@Valid @RequestBody Client client) {

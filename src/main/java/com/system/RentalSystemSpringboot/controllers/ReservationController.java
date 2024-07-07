@@ -63,6 +63,7 @@ public class ReservationController {
     @PostMapping
     public ResponseEntity<Reservation> createReservation(@Valid @RequestBody Reservation reservation) {
         logger.info("Création d'une nouvelle réservation");
+
         Reservation savedReservation = reservationService.save(reservation);
         return new ResponseEntity<>(savedReservation, HttpStatus.CREATED);
     }
