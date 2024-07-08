@@ -3,6 +3,7 @@ package com.system.RentalSystemSpringboot.services;
 import com.system.RentalSystemSpringboot.models.Client;
 import com.system.RentalSystemSpringboot.models.Reservation;
 import com.system.RentalSystemSpringboot.repository.ReservationRepository;
+import com.system.RentalSystemSpringboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +14,12 @@ public class ReservationService {
 
     @Autowired
     ReservationRepository reservationRepository;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
 
-    public List<Reservation> findByClient(Client client){
+    public List<Reservation> findByClient(Optional<Client> client){
         Optional<List<Reservation>> reservations= Optional.ofNullable(reservationRepository.findByClient(client));
         if (reservations.isPresent()){
             return reservations.get();
@@ -40,6 +45,19 @@ public class ReservationService {
     public Reservation save(Reservation reservation){
         return reservationRepository.save(reservation);
     }
+
+    public List <Reservation> findreservationbykeycloackid(String keycloackid){
+        Optional<Client> client=userRepository.findByKeycloakId(keycloackid);
+        if(client.isPresent()){
+            return findByClient(client);
+        }
+        else {
+            throw new RuntimeException("Aucune reservation trouver pour ce client");
+        }
+
+
+    }
+
 
 
 }

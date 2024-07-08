@@ -49,16 +49,7 @@ public class ReservationController {
         }
     }
 
-    @GetMapping("/{clientId}/reservations")
-    public ResponseEntity<List<Reservation>> getReservationsByClientId(@PathVariable long clientId) {
-        logger.info("Récupération des réservations pour le client avec l'id {}", clientId);
-        List<Reservation> reservations = reservationService.findByClient(clientService.findById(clientId));
-        if (reservations.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.ok(reservations);
-        }
-    }
+
 
     @PostMapping
     public ResponseEntity<Reservation> createReservation(@Valid @RequestBody Reservation reservation) {
@@ -79,6 +70,19 @@ public class ReservationController {
             Reservation updatedReservation = reservationService.save(reservation);
             return ResponseEntity.ok(updatedReservation);
         }
+    }
+
+    @GetMapping("/client/{keycloack}")
+    public ResponseEntity <List<Reservation>> getReservationByKeycloack(@PathVariable String keycloack) {
+
+        List<Reservation> clientreservation=reservationService.findreservationbykeycloackid(keycloack);
+        if (clientreservation != null) {
+            return ResponseEntity.ok(clientreservation);
+        }
+        else {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
 
