@@ -4,6 +4,7 @@ import com.system.RentalSystemSpringboot.models.Client;
 import com.system.RentalSystemSpringboot.models.Utilisateur;
 import com.system.RentalSystemSpringboot.repository.UserRepository;
 import com.system.RentalSystemSpringboot.services.ClientService;
+import com.system.RentalSystemSpringboot.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,8 @@ public class ClientController {
     private ClientService clientService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_admin')")
@@ -57,6 +60,21 @@ public class ClientController {
     public ResponseEntity<Client> addClient(@Valid @RequestBody Client client) {
         Client savedClient = clientService.save(client);
         return new ResponseEntity<>(savedClient, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/update/{keycloackid}")
+    public ResponseEntity<Client> updateclientusingkeycloackid(@PathVariable String keycloackid,@Valid @RequestBody Client client) {
+        try {
+           long id = userRepository.findByKeycloakId(keycloackid).get().getId();
+           if (id != 0){
+           clientService.updatebyid(id,client);
+           return ResponseEntity.ok(client);}
+           else {
+               return ResponseEntity.notFound().build();
+           }
+        }catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("/{id}")

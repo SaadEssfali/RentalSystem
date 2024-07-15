@@ -76,4 +76,21 @@ public class ClientService {
         }
         return null;
     }
+
+    public Client updatebyid(long id,Client clientupdated){
+        Optional<Client> client=clientRepository.findById(id);
+        if(client.isPresent()){
+            client.get().setCin(clientupdated.getCin());
+            client.get().setAdresse(clientupdated.getAdresse());
+            client.get().setNumerotelephone(clientupdated.getNumerotelephone());
+            client.get().setVille(clientupdated.getVille());
+            client.get().setNumeropermis(clientupdated.getNumeropermis());
+            client.get().setCodePostal(clientupdated.getCodePostal());
+           return clientRepository.save(client.get());
+        }
+        else {
+            throw new RuntimeException("Client not found with id: " + id);
+        }
+
+    }
 }
