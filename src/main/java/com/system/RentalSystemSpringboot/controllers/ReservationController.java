@@ -2,8 +2,10 @@ package com.system.RentalSystemSpringboot.controllers;
 
 
 import com.system.RentalSystemSpringboot.models.Reservation;
+import com.system.RentalSystemSpringboot.repository.UserRepository;
 import com.system.RentalSystemSpringboot.services.ClientService;
 import com.system.RentalSystemSpringboot.services.ReservationService;
+import com.system.RentalSystemSpringboot.services.UserService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,10 @@ public class ReservationController {
     private ReservationService reservationService;
     @Autowired
     private ClientService clientService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping
     public ResponseEntity<List<Reservation>> getAllReservations() {
@@ -54,7 +60,7 @@ public class ReservationController {
     @PostMapping
     public ResponseEntity<Reservation> createReservation(@Valid @RequestBody Reservation reservation) {
         logger.info("Création d'une nouvelle réservation");
-
+        reservation.setStatut("pending");
         Reservation savedReservation = reservationService.save(reservation);
         return new ResponseEntity<>(savedReservation, HttpStatus.CREATED);
     }
@@ -83,6 +89,18 @@ public class ReservationController {
             return ResponseEntity.notFound().build();
         }
 
+    }
+    @GetMapping("/client/{keycloackid}/reservation/count")
+    public ResponseEntity<Object> getReservationCountByKeycloack(@PathVariable String keycloackid) {
+    long  clientid=userRepository.findByKeycloakId(keycloackid).get().getId();
+    if (clientid!=0){
+        long nombre = reservationService.getReservationCountByClientId(clientid);
+
+        return ResponseEntity.ok(nombre);
+    }
+    else {
+        return ResponseEntity.notFound().build();
+    }
     }
 
 

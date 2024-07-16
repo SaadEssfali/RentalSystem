@@ -56,6 +56,11 @@ public class ReservationService {
         }
 
 
+
+
+    }
+    public long getReservationCountByClientId(Long clientId) {
+        return reservationRepository.countReservationsByClientId(clientId);
     }
 
 
