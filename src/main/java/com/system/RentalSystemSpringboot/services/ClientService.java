@@ -6,6 +6,9 @@ import com.system.RentalSystemSpringboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,6 +89,7 @@ public class ClientService {
             client.get().setVille(clientupdated.getVille());
             client.get().setNumeropermis(clientupdated.getNumeropermis());
             client.get().setCodePostal(clientupdated.getCodePostal());
+            client.get().setLastModifiedDate(new Date());
            return clientRepository.save(client.get());
         }
         else {
