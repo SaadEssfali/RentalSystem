@@ -2,8 +2,10 @@ package com.system.RentalSystemSpringboot.controllers;
 
 import com.system.RentalSystemSpringboot.models.Client;
 import com.system.RentalSystemSpringboot.models.Reservation;
+import com.system.RentalSystemSpringboot.models.Voiture;
 import com.system.RentalSystemSpringboot.services.ClientService;
 import com.system.RentalSystemSpringboot.services.ReservationService;
+import com.system.RentalSystemSpringboot.services.VoitureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -20,6 +22,8 @@ public class AdminController {
     private  ReservationService reservationService;
     @Autowired
     private ClientService clientService;
+    @Autowired
+    private VoitureService voitureService;
 
     @GetMapping("/reservation/totalreservation")
     public ResponseEntity<Integer> getotalreservationnumber(){
@@ -87,6 +91,25 @@ public class AdminController {
 
         }
         else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @PutMapping("/voitures/update")
+    public ResponseEntity<Voiture> updateVoiture(@RequestBody Voiture voiture) {
+        if (voiture!=null) {
+            voitureService.updateVoiture(voiture);
+            return ResponseEntity.ok(voiture);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/voitures/add")
+    public ResponseEntity<Voiture> addVoiture(@RequestBody Voiture voiture) {
+        if (voiture!=null) {
+            voitureService.save(voiture);
+            return ResponseEntity.ok(voiture);
+        }else {
             return ResponseEntity.notFound().build();
         }
     }

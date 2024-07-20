@@ -50,7 +50,7 @@ public class VoitureService {
             Voiture updatedvoiture=voitureOptional.get();
             updatedvoiture.setMarque(voiture.getMarque());
             updatedvoiture.setModele(voiture.getModele());
-
+            updatedvoiture.setStatut(voiture.getStatut());
             updatedvoiture.setKilometrage(voiture.getKilometrage());
             updatedvoiture.setNumeroimmatriculation(voiture.getNumeroimmatriculation());
             updatedvoiture.setPrixparjour(voiture.getPrixparjour());
