@@ -21,4 +21,6 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     @Modifying
     @Query("UPDATE Client c SET c.etat = 'supprimé' WHERE c.id = :clientId")
     int updateClientEtatById(@Param("clientId") Long clientId);
+    @Query("select  count(*) from Client")
+    int countClient();
 }

@@ -7,6 +7,7 @@ import com.system.RentalSystemSpringboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -43,6 +44,7 @@ public class ReservationService {
     }
 
     public Reservation save(Reservation reservation){
+        reservation.setJourdereservation(new Date());
         return reservationRepository.save(reservation);
     }
 
@@ -63,6 +65,15 @@ public class ReservationService {
         return reservationRepository.countReservationsByClientId(clientId);
     }
 
+    public int gettotalnumberreservatiion(){
+
+        return (int) reservationRepository.totalreservationnumber();
+    }
+    public List<Reservation> getall(){
+        List<Reservation> reservations= reservationRepository.findAll();
+        return reservations;
+
+    }
 
 
 }

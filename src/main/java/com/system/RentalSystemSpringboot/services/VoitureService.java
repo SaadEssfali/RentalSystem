@@ -54,7 +54,6 @@ public class VoitureService {
             updatedvoiture.setKilometrage(voiture.getKilometrage());
             updatedvoiture.setNumeroimmatriculation(voiture.getNumeroimmatriculation());
             updatedvoiture.setPrixparjour(voiture.getPrixparjour());
-            updatedvoiture.setStatut(voiture.getStatut());
             updatedvoiture.setTypecarburant(voiture.getTypecarburant());
 
             return voitureRepository.save(updatedvoiture);

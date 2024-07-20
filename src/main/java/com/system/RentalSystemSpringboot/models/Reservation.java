@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -36,4 +37,6 @@ public class Reservation {
 
     private int kilometragedebut;
     private int kilometragefin;
+    private double prixtotal;
+    private Date jourdereservation;
 }

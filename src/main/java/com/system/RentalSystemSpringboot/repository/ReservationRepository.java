@@ -16,6 +16,7 @@ public interface ReservationRepository extends JpaRepository<Reservation,Long> {
     List<Reservation> findByClient( Optional<Client> client);
     @Query("SELECT COUNT(r) FROM Reservation r WHERE r.client.id = :clientId")
     long countReservationsByClientId(@Param("clientId") Long clientId);
-
+    @Query("SELECT COUNT(r) FROM Reservation r ")
+    long totalreservationnumber();
 }
 

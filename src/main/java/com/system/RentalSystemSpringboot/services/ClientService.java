@@ -43,7 +43,6 @@ public class ClientService {
             client1.setNom(upclient.getNom());
             client1.setPrenom(upclient.getPrenom());
             client1.setAdresse(upclient.getAdresse());
-            client1.setNumerotelephone(upclient.getNumerotelephone());
             client1.setVille(upclient.getVille());
             client1.setCodePostal(upclient.getCodePostal());
             client1.setNumeropermis(upclient.getNumeropermis());
@@ -85,16 +84,20 @@ public class ClientService {
         if(client.isPresent()){
             client.get().setCin(clientupdated.getCin());
             client.get().setAdresse(clientupdated.getAdresse());
-            client.get().setNumerotelephone(clientupdated.getNumerotelephone());
             client.get().setVille(clientupdated.getVille());
             client.get().setNumeropermis(clientupdated.getNumeropermis());
             client.get().setCodePostal(clientupdated.getCodePostal());
             client.get().setLastModifiedDate(new Date());
+            client.get().setNumeroTelephone(clientupdated.getNumeroTelephone());
+            client.get().setEmail(clientupdated.getEmail());
            return clientRepository.save(client.get());
         }
         else {
             throw new RuntimeException("Client not found with id: " + id);
         }
 
+    }
+    public int totalclientnumber(){
+        return clientRepository.countClient();
     }
 }

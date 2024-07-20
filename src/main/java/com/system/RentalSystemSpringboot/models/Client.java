@@ -24,7 +24,6 @@ public class Client extends Utilisateur{
     private String numeropermis;
 
 
-    private String numerotelephone;
     private String adresse;
     private String ville;
     private String codePostal;

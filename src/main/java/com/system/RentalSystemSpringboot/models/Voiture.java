@@ -25,7 +25,7 @@ public class Voiture {
     private String numeroimmatriculation;
 
     private Double prixparjour;
-    private String statut;
+
     private String marque;
     private String modele;
     private int kilometrage;
