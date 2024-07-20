@@ -18,5 +18,8 @@ public interface ReservationRepository extends JpaRepository<Reservation,Long> {
     long countReservationsByClientId(@Param("clientId") Long clientId);
     @Query("SELECT COUNT(r) FROM Reservation r ")
     long totalreservationnumber();
+    @Query("SELECT SUM(r.prixtotal) FROM Reservation r")
+    Double totalOfRevenue();
+
 }
 

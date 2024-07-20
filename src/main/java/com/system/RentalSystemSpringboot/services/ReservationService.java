@@ -74,6 +74,8 @@ public class ReservationService {
         return reservations;
 
     }
-
+    public double totalrevenue(){
+        return reservationRepository.totalOfRevenue();
+    }
 
 }

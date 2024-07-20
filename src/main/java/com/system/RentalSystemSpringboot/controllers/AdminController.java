@@ -6,9 +6,7 @@ import com.system.RentalSystemSpringboot.services.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -52,6 +50,26 @@ public class AdminController {
         else {
 
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/reservation/totalrevenue")
+    public ResponseEntity<Double> totalrevenue(){
+        if (reservationService.totalrevenue()>-1){
+            return ResponseEntity.ok(reservationService.totalrevenue());
+        }
+        else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/reservation/statutupdate")
+    public ResponseEntity<Reservation> updateReservationStatus(@RequestBody Reservation reservation) {
+        try {
+            Reservation updatedReservation = reservationService.save(reservation);
+            return ResponseEntity.ok(updatedReservation);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null); // Return 500 Internal Server Error in case of failure
         }
     }
 }
