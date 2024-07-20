@@ -23,4 +23,9 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     int updateClientEtatById(@Param("clientId") Long clientId);
     @Query("select  count(*) from Client")
     int countClient();
+
+
+    @Query("SELECT SUM(r.prixtotal) FROM Reservation r WHERE r.client.id = :clientId")
+    Double findTotalBalanceSpentByClientId(@Param("clientId") Long clientId);
+
 }

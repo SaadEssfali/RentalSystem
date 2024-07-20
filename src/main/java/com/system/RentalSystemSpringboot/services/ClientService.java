@@ -100,4 +100,8 @@ public class ClientService {
     public int totalclientnumber(){
         return clientRepository.countClient();
     }
+    public Double getTotalBalanceSpent(Long clientId) {
+        return clientRepository.findTotalBalanceSpentByClientId(clientId);
+    }
+
 }

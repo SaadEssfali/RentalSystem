@@ -1,5 +1,6 @@
 package com.system.RentalSystemSpringboot.controllers;
 
+import com.system.RentalSystemSpringboot.models.Client;
 import com.system.RentalSystemSpringboot.models.Reservation;
 import com.system.RentalSystemSpringboot.services.ClientService;
 import com.system.RentalSystemSpringboot.services.ReservationService;
@@ -70,6 +71,23 @@ public class AdminController {
             return ResponseEntity.ok(updatedReservation);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null); // Return 500 Internal Server Error in case of failure
+        }
+    }
+
+    @GetMapping("/{clientId}/balance-spent")
+    public ResponseEntity<Double> getTotalBalanceSpent(@PathVariable Long clientId) {
+        Double totalBalanceSpent = clientService.getTotalBalanceSpent(clientId);
+        return ResponseEntity.ok(totalBalanceSpent);
+    }
+
+    @GetMapping("/clients")
+    public ResponseEntity<List<Client>> getAllClients() {
+        if (clientService.findAll().size()>0){
+            return ResponseEntity.ok(clientService.findAll());
+
+        }
+        else {
+            return ResponseEntity.notFound().build();
         }
     }
 }
