@@ -102,6 +102,42 @@ public class ReservationController {
         return ResponseEntity.notFound().build();
     }
     }
+    @GetMapping("/client/{keycloackid}/reservation/countcanceled")
+    public ResponseEntity<Object> getReservationCountcanceldByKeycloackid(@PathVariable String keycloackid) {
+
+        if (keycloackid!=null){
+            long nombre = reservationService.gettotalnumberreservatiioncanceled(keycloackid);
+
+            return ResponseEntity.ok(nombre);
+        }
+        else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/client/{keycloackid}/reservation/countpending")
+    public ResponseEntity<Object> getReservationCountpendingByKeycloackid(@PathVariable String keycloackid) {
+
+        if (keycloackid!=null){
+            long nombre = reservationService.gettotalnumberreservatiionpending(keycloackid);
+
+            return ResponseEntity.ok(nombre);
+        }
+        else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/client/{keycloackid}/reservation/countscheduled")
+    public ResponseEntity<Object> getReservationCountscheduledByKeycloackid(@PathVariable String keycloackid) {
+
+        if (keycloackid!=null){
+            long nombre = reservationService.gettotalnumberreservatiionscheduled(keycloackid);
+
+            return ResponseEntity.ok(nombre);
+        }
+        else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 
 }

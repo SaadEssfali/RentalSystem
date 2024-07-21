@@ -2,6 +2,7 @@ package com.system.RentalSystemSpringboot.services;
 
 import com.system.RentalSystemSpringboot.models.Client;
 import com.system.RentalSystemSpringboot.models.Reservation;
+import com.system.RentalSystemSpringboot.repository.ClientRepository;
 import com.system.RentalSystemSpringboot.repository.ReservationRepository;
 import com.system.RentalSystemSpringboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,10 @@ public class ReservationService {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ClientService clientService;
+    @Autowired
+    private ClientRepository clientRepository;
 
     public List<Reservation> findByClient(Optional<Client> client){
         Optional<List<Reservation>> reservations= Optional.ofNullable(reservationRepository.findByClient(client));
@@ -76,6 +81,18 @@ public class ReservationService {
     }
     public double totalrevenue(){
         return reservationRepository.totalOfRevenue();
+    }
+    public int gettotalnumberreservatiioncanceled(String keycloackid){
+        Optional<Client> client=userRepository.findByKeycloakId(keycloackid);
+        return (int) reservationRepository.totalreservationnumbercanceled(client.get().getId());
+    }
+    public int gettotalnumberreservatiionpending(String keycloackid){
+        Optional<Client> client=userRepository.findByKeycloakId(keycloackid);
+        return (int) reservationRepository.totalreservationnumberpending(client.get().getId());
+    }
+    public int gettotalnumberreservatiionscheduled(String keycloackid){
+        Optional<Client> client=userRepository.findByKeycloakId(keycloackid);
+        return (int) reservationRepository.totalreservationnumberscheduled(client.get().getId());
     }
 
 }

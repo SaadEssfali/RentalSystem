@@ -21,5 +21,12 @@ public interface ReservationRepository extends JpaRepository<Reservation,Long> {
     @Query("SELECT SUM(r.prixtotal) FROM Reservation r")
     Double totalOfRevenue();
 
+    @Query("SELECT COUNT(r) FROM Reservation r where r.statut='canceled' and r.client.id=:clientId")
+    long totalreservationnumbercanceled(@Param("clientId") Long clientId);
+    @Query("SELECT COUNT(r) FROM Reservation r where r.statut='pending' and r.client.id=:clientId")
+    long totalreservationnumberpending(@Param("clientId") Long clientId);
+    @Query("SELECT COUNT(r) FROM Reservation r where r.statut='scheduled' and r.client.id=:clientId")
+    long totalreservationnumberscheduled(@Param("clientId") Long clientId);
+
 }
 
