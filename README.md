@@ -8,6 +8,15 @@ Spring Boot backend for managing cars, clients, and reservations.
 ### Description
 RentalSystem est une API REST construite avec Spring Boot pour gérer un système de location de voitures, avec gestion des utilisateurs, clients, véhicules et réservations.
 
+### Ce que fait l’application
+L’application centralise le cycle complet d’une location de voiture :
+- un utilisateur s’inscrit puis s’authentifie via Keycloak ;
+- les administrateurs gèrent les voitures disponibles ;
+- les clients sont enregistrés dans le système ;
+- une réservation relie un client, une voiture et une période de location.
+
+L’objectif est de fournir une base backend claire et sécurisée pour une plateforme de location.
+
 ### Fonctionnalités principales
 - Gestion des voitures (`/voiture`)
 - Gestion des réservations (`/reservation`)
@@ -60,6 +69,15 @@ Une fois l’application lancée :
 
 ### Description
 RentalSystem is a Spring Boot REST API for managing a car rental workflow, including users, clients, vehicles, and reservations.
+
+### What the application does
+The application covers the full car-rental lifecycle:
+- users register and authenticate through Keycloak;
+- administrators manage available cars;
+- clients are stored and managed in the system;
+- reservations link a client, a car, and a rental period.
+
+The goal is to provide a clear and secure backend foundation for a rental platform.
 
 ### Main features
 - Car management (`/voiture`)
